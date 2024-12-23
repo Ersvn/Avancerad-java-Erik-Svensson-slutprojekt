@@ -1,7 +1,6 @@
 # Avancerad-java-Erik-Svensson-slutprojekt
-Slutprojekt på Avancerad Javaprogrammering 2024
 
-Här är ett förbättrat och mer detaljerat README för ditt projekt, med tillägg av formatering, emojis och en mer strukturerad layout:
+## Slutprojekt på Avancerad Javaprogrammering 2024
 
 ```markdown
 # Todo-List 3000 🚀
