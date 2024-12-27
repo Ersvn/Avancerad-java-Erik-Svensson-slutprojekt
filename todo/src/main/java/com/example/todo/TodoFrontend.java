@@ -21,35 +21,32 @@ public class TodoFrontend extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Todo-List 3000");
 
-        // Layout för GUI
         VBox vbox = new VBox();
         vbox.setSpacing(0);
 
-        // Lista för att visa Todos
         todoListView.setMinHeight(250);
 
-
-        // Knappar
+        //Buttons
         Button postButton = new Button("Lägg till");
         Button toggleDoneButton = new Button("Klar");
         Button deleteButton = new Button("Ta bort");
 
-        // Textfält för att skapa ny Todo
+        //Ny todo fält
         TextField descriptionField = new TextField();
         descriptionField.setPromptText("Beskrivning");
 
-        // Layout för knappar och textfält
+        //Layout
         HBox buttonBox = new HBox();
         buttonBox.setSpacing(10);
         buttonBox.getChildren().addAll(postButton, toggleDoneButton, deleteButton);
 
-        // Lägg till komponenter till vbox
+        //getChildren vbox
         vbox.getChildren().addAll(todoListView, descriptionField, buttonBox);
 
-        // Funktionalitet för knappar
+        //action events knapp
         postButton.setOnAction(event -> {
             createTodo(descriptionField.getText());
-            descriptionField.clear(); // Töm textfältet efter att en ny Todo lagts till
+            descriptionField.clear();
         });
 
         toggleDoneButton.setOnAction(event -> {
@@ -70,7 +67,7 @@ public class TodoFrontend extends Application {
             }
         });
 
-        // Sätt scenen och visa fönstret
+        //Skapa scene vbox/knappar
         Scene scene = new Scene(vbox, 400, 335);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -88,13 +85,13 @@ public class TodoFrontend extends Application {
         deleteButton.setPrefHeight(50);
         deleteButton.setStyle("-fx-font-size: 16px;");
 
-        descriptionField.setPrefHeight(40);  // Sätt höjden på TextField
-        descriptionField.setStyle("-fx-font-size: 16px;");  // Sätt fontstorlek till 16px
+        descriptionField.setPrefHeight(40);
+        descriptionField.setStyle("-fx-font-size: 16px;");
         todoListView.setPrefHeight(40);
         todoListView.setStyle("-fx-font-size: 16px;");
     }
 
-    // Hämta alla Todos och uppdatera listan i GUI:t
+    //Hämta todos och visa lista
     private void getAllTodos() {
         Todo[] todosArray = restTemplate.getForObject(BASE_URL, Todo[].class);
         if (todosArray != null) {
@@ -104,7 +101,7 @@ public class TodoFrontend extends Application {
         }
     }
 
-    // Skapa en ny Todo och uppdatera listan
+    //Skapa ny todo och hämta uppgifter
     private void createTodo(String description) {
         if (description.isEmpty()) {
             showAlert("Error", "Description cannot be empty");
@@ -115,9 +112,8 @@ public class TodoFrontend extends Application {
         getAllTodos();
     }
 
-    // Växla mellan true och false för 'done' och uppdatera Todo
+    //Bool done/undone - uppdatera lista
     private void toggleTodoDone(Long id) {
-        // Leta upp Todo i cachen
         Todo todoToUpdate = todoCache.stream()
                 .filter(todo -> todo.getId().equals(id))
                 .findFirst()
@@ -126,13 +122,13 @@ public class TodoFrontend extends Application {
         if (todoToUpdate != null) {
             todoToUpdate.setDone(!todoToUpdate.isDone());
             restTemplate.put(BASE_URL + "/" + id, todoToUpdate);
-            getAllTodos(); // Uppdatera listan
+            getAllTodos();
         } else {
             showAlert("Error", "Could not find Todo to update.");
         }
     }
 
-    // Ta bort en Todo från backend och uppdatera listan
+    //delet todo
     private void deleteTodo(Long id) {
         try {
             restTemplate.delete(BASE_URL + "/" + id);
@@ -143,7 +139,7 @@ public class TodoFrontend extends Application {
         }
     }
 
-    // Uppdatera ListView baserat på todoCache
+    //uppdatera listview
     private void updateListView() {
         List<String> displayList = new ArrayList<>();
         int index = 1;
@@ -158,7 +154,7 @@ public class TodoFrontend extends Application {
         todoListView.getItems().setAll(displayList);
     }
 
-    // Hämta vald Todo baserat på ListView:s index
+    //listview index-hämtning
     private Todo getSelectedTodo() {
         int selectedIndex = todoListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < todoCache.size()) {
@@ -167,7 +163,7 @@ public class TodoFrontend extends Application {
         return null;
     }
 
-    // Visar en enkel varningsdialog
+    //Varningsruta
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);

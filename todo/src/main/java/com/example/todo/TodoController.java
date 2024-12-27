@@ -11,14 +11,12 @@ public class TodoController {
     private Map<Long, Todo> todos = new HashMap<>();
     private long currentId = 1;
 
-    // Hämta alla uppgifter
     @GetMapping
     public List<Todo> getAllTodos() {
         System.out.println("Fetching all todos...");
         return new ArrayList<>(todos.values());
     }
 
-    // Skapa en ny uppgift
     @PostMapping
     public Todo createTodo(@RequestBody Todo todo) {
         System.out.println("Creating todo: " + todo.getDescription());
@@ -27,7 +25,6 @@ public class TodoController {
         return todo;
     }
 
-    // Uppdatera en uppgift
     @PutMapping("/{id}")
     public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody Todo todo) {
         Todo existingTodo = todos.get(id);
@@ -41,7 +38,6 @@ public class TodoController {
         return ResponseEntity.ok(existingTodo);
     }
 
-    // Ta bort en uppgift
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
         Todo existingTodo = todos.remove(id);
