@@ -4,7 +4,9 @@
 
 ```markdown
 # Todo-List 3000 🚀
-**Todo-List 3000** är en JavaFX-applikation som låter användare hantera en lista med uppgifter. Applikationen integrerar med ett REST API för att skapa, uppdatera och ta bort uppgifter, vilket gör det enkelt att hålla koll på din "att göra"-lista.
+**Todo-List 3000** är en JavaFX-applikation som låter användare hantera en lista med uppgifter.
+Applikationen integrerar med ett REST API för att skapa, uppdatera och ta bort uppgifter, 
+vilket gör det enkelt att hålla koll på din "att göra"-lista.
 
 ## 🛠 Funktionalitet
 - **Visa alla uppgifter** 📝: Applikationen hämtar och visar alla uppgifter från backend-API:t.
